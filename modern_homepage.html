@@ -1,0 +1,1698 @@
+                <div class="course-grid">
+                    <div class="course-item active-course">
+                        <div class="course-status">🟢<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jason James - Computer Science Instructor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #8b5cf6;
+            --secondary-color: #7c3aed;
+            --accent-color: #a78bfa;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --border-color: #334155;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-dark: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --info-color: #06b6d4;
+            --glass-bg: rgba(30, 41, 59, 0.8);
+            --glass-border: rgba(148, 163, 184, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+            padding-top: 50px; /* Reduced space for compact nav */
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            z-index: 1000;
+            padding: 0.5rem 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            background: #f3f4f6;
+            color: #8b5cf6;
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 0.25rem 0;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-5px);
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-link {
+            display: block;
+            color: #6b7280;
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            transition: all 0.2s ease;
+            font-size: 0.85rem;
+        }
+
+        .dropdown-link:hover {
+            background: #f3f4f6;
+            color: #8b5cf6;
+        }
+
+        .dropdown-arrow {
+            font-size: 0.7rem;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-item:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .contact-email {
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4) !important;
+            color: white !important;
+            border-radius: 20px !important;
+            padding: 0.5rem 1rem !important;
+            font-weight: 600 !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3) !important;
+        }
+
+        .contact-email:hover {
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4) !important;
+            background: linear-gradient(135deg, #7c3aed, #0284c7) !important;
+        }
+
+        /* Header */
+        .header {
+            background: var(--gradient);
+            background-attachment: fixed;
+            padding: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 58, 237, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.3) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1.5" fill="white" opacity="0.1"/></svg>') repeat;
+            animation: float 30s linear infinite reverse;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(-100px) translateY(-100px); }
+            100% { transform: translateX(100px) translateY(100px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero {
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #a78bfa, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--glass-bg);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            background: rgba(139, 92, 246, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 4rem 0;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: var(--bg-card-hover);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .card-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .card-link {
+            display: inline-block;
+            background: var(--bg-tertiary);
+            color: var(--accent-color);
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .card-link:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Quick Dashboard */
+        .quick-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .dashboard-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--warning-color), var(--primary-color));
+        }
+
+        .dashboard-item.urgent::before {
+            background: linear-gradient(90deg, var(--warning-color), #f97316);
+        }
+
+        .dashboard-item.important::before {
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .dashboard-item.helpful::before {
+            background: linear-gradient(90deg, var(--info-color), #0284c7);
+        }
+
+        .dashboard-item.info::before {
+            background: linear-gradient(90deg, var(--text-muted), var(--text-secondary));
+        }
+
+        .dashboard-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: var(--bg-card-hover);
+        }
+
+        .dashboard-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .dashboard-item h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .dashboard-item p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .dashboard-link {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-link:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        /* Course Tables */
+        .course-table {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+        }
+
+        .table-header {
+            background: var(--gradient);
+            color: white;
+            padding: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            position: relative;
+        }
+
+        .table-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .table-content {
+            padding: 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .course-item {
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .course-item:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+        }
+
+        /* Course improvements */
+        .course-item.active-course {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--primary-color);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.2);
+        }
+        .course-item.active-course {
+            background: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%);
+            border: 2px solid var(--primary-color);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .course-status {
+            display: inline-block;
+            background: var(--success-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .course-item h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        /* Resource category improvements */
+        .resource-category.priority {
+            border: 2px solid var(--warning-color);
+            background: linear-gradient(135deg, #fef3c7 0%, white 20%);
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .priority-badge {
+            background: var(--warning-color);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .resource-list a {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .resource-list a:hover {
+            background: var(--bg-secondary);
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        /* Contact section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 4px;
+            border-radius: 2px;
+        }
+
+        .contact-card.office-hours::before {
+            background: linear-gradient(180deg, var(--warning-color), #f97316);
+        }
+
+        .contact-card.location::before {
+            background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .contact-link {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-top: 1rem;
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+        .course-table {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .table-header {
+            background: var(--gradient);
+            color: white;
+            padding: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .table-content {
+            padding: 2rem;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .course-item {
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .course-item:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.02);
+        }
+
+        /* Resources Section */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .resource-category {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .resource-category:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .resource-category.priority {
+            border: 2px solid var(--warning-color);
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, var(--glass-bg) 20%);
+            box-shadow: 0 8px 32px rgba(245, 158, 11, 0.2);
+        }
+
+        .resource-category h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .resource-list {
+            list-style: none;
+        }
+
+        .resource-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-list a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        .resource-list a:hover {
+            color: var(--accent-color);
+            background: var(--bg-tertiary);
+            transform: translateX(5px);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            color: var(--text-secondary);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 2rem 0;
+            }
+
+            .nav-menu {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-link {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.8rem;
+            }
+
+            .nav-container {
+                padding: 0 0.5rem;
+            }
+
+            .dropdown {
+                min-width: 180px;
+            }
+
+            body {
+                padding-top: 60px; /* Adjust for mobile */
+            }
+        }
+
+        /* Calendar and Schedule Section */
+        .schedule-section {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+        }
+
+        .schedule-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Mini Calendar */
+        .mini-calendar {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .calendar-header {
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            min-width: 200px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            padding: 0.25rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .calendar-day:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .calendar-day.current {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+        }
+
+        .calendar-day.other-month {
+            color: var(--text-muted);
+        }
+
+        /* Today's Schedule */
+        .today-schedule {
+            background: linear-gradient(135deg, var(--glass-bg) 0%, var(--bg-card) 100%);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .today-schedule::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--info-color), var(--success-color), var(--warning-color));
+        }
+
+        .schedule-header {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.25rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .schedule-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary-color);
+        }
+
+        .schedule-item.office-hours::before {
+            background: linear-gradient(180deg, var(--info-color), #0284c7);
+        }
+
+        .schedule-item.lecture::before {
+            background: linear-gradient(180deg, var(--success-color), #059669);
+        }
+
+        .schedule-item.lab::before {
+            background: linear-gradient(180deg, var(--warning-color), #f97316);
+        }
+
+        .schedule-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: var(--bg-card-hover);
+        }
+
+        .schedule-time {
+            font-weight: 700;
+            color: var(--text-primary);
+            min-width: 100px;
+            font-size: 1rem;
+            background: var(--bg-tertiary);
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .schedule-details {
+            flex: 1;
+        }
+
+        .schedule-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .schedule-location {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .schedule-icon {
+            font-size: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .office-hours .schedule-icon {
+            color: var(--info-color);
+        }
+
+        .lecture .schedule-icon {
+            color: var(--success-color);
+        }
+
+        .lab .schedule-icon {
+            color: var(--warning-color);
+        }
+
+        .no-schedule {
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+            padding: 3rem;
+            background: var(--glass-bg);
+            border-radius: 12px;
+            border: 1px dashed var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .schedule-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .mini-calendar {
+                justify-self: center;
+            }
+        }
+        .quick-access {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 50px;
+            box-shadow: 
+                0 10px 25px rgba(139, 92, 246, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .quick-access:hover {
+            transform: scale(1.1);
+            box-shadow: 
+                0 15px 35px rgba(139, 92, 246, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: var(--primary-color);
+            color: white;
+        }1rem;
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Quick access badge */
+        .quick-access {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .quick-access:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(37, 99, 235, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        📝 Assignments
+                        <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <div class="dropdown">
+                        <a href="https://craieprogramming.org/121/labs/" class="dropdown-link">🧪 Labs</a>
+                        <a href="https://craieprogramming.org/121/projects/" class="dropdown-link">🚀 Projects</a>
+                        <a href="https://craieprogramming.org/portfolio.html" class="dropdown-link">📁 What's a portfolio again?</a>
+                        <a href="https://craieprogramming.org/121/exams/" class="dropdown-link">📊 Exams</a>
+                        <a href="https://craieprogramming.org/compsci.xcred.html" class="dropdown-link">⭐ Non-Portfolio Extra Credit</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="https://craieprogramming.org/121/notes/" class="nav-link">📚 Notes</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://craieprogramming.org/121/samples/" class="nav-link">💻 Examples</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://craieprogramming.org/121/syllabus/" class="nav-link">📋 Syllabus</a>
+                </li>
+                <li class="nav-item">
+                    <a href="mailto:craie@acm.org?subject=CSC%20121%20-%20Question%20from%20Student" class="nav-link contact-email">📧 Email Prof</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Calendar and Schedule Section -->
+    <section class="schedule-section">
+        <div class="schedule-container">
+            <!-- Mini Calendar -->
+            <div class="mini-calendar">
+                <div class="calendar-header" id="calendar-month-year">June 2025</div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-header">S</div>
+                    <div class="calendar-day-header">M</div>
+                    <div class="calendar-day-header">T</div>
+                    <div class="calendar-day-header">W</div>
+                    <div class="calendar-day-header">T</div>
+                    <div class="calendar-day-header">F</div>
+                    <div class="calendar-day-header">S</div>
+                    <!-- Calendar days will be populated by JavaScript -->
+                    <div class="calendar-day other-month">1</div>
+                    <div class="calendar-day">2</div>
+                    <div class="calendar-day">3</div>
+                    <div class="calendar-day">4</div>
+                    <div class="calendar-day">5</div>
+                    <div class="calendar-day">6</div>
+                    <div class="calendar-day">7</div>
+                    <div class="calendar-day">8</div>
+                    <div class="calendar-day">9</div>
+                    <div class="calendar-day current">10</div>
+                    <div class="calendar-day">11</div>
+                    <div class="calendar-day">12</div>
+                    <div class="calendar-day">13</div>
+                    <div class="calendar-day">14</div>
+                    <div class="calendar-day">15</div>
+                    <div class="calendar-day">16</div>
+                    <div class="calendar-day">17</div>
+                    <div class="calendar-day">18</div>
+                    <div class="calendar-day">19</div>
+                    <div class="calendar-day">20</div>
+                    <div class="calendar-day">21</div>
+                    <div class="calendar-day">22</div>
+                    <div class="calendar-day">23</div>
+                    <div class="calendar-day">24</div>
+                    <div class="calendar-day">25</div>
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day">27</div>
+                    <div class="calendar-day">28</div>
+                    <div class="calendar-day">29</div>
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day other-month">31</div>
+                </div>
+            </div>
+
+            <!-- Today's Schedule -->
+            <div class="today-schedule">
+                <div class="schedule-header">
+                    📅 <span id="today-date">Today's Schedule - Tuesday, June 10</span>
+                </div>
+                <div id="schedule-content">
+                    <!-- Schedule items will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="hero">
+                <h1>CSC 121 - Computer Programming I</h1>
+                <p>Welcome to Computer Programming I with Jason James<br>Your gateway to the world of C++ programming and computer science</p>
+                <a href="https://craieprogramming.org/121/" class="cta-button">Enter Course Site</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- About Section -->
+            <section class="section">
+                <h2 class="section-title">👨‍🏫 About Your Instructor</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>🎓 Jason James</h3>
+                        <p>Computer Science Instructor at Harper College. I teach programming and mathematics, helping students develop problem-solving skills and programming expertise.</p>
+                        <div class="card-links">
+                            <a href="http://www.harpercollege.edu/" class="card-link">Harper College</a>
+                            <a href="https://www.harpercollege.edu/academics/stem/computer-science/index.php" class="card-link">CS Department</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>📅 Office Hours & Schedule</h3>
+                        <p>Need help or have questions? Check my current schedule for office hours and the best times to reach me.</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/summer.schedule.pdf" class="card-link">Current Schedule</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>🏫 Department Info</h3>
+                        <p>Computer Science at Harper College is part of the Mathematical Sciences department, fostering interdisciplinary learning.</p>
+                        <div class="card-links">
+                            <a href="http://www.harperfacultysenate.org/" class="card-link">Faculty Senate</a>
+                            <a href="http://www.harperadjuncts.org/" class="card-link">Adjunct Faculty</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Access Dashboard -->
+            <section class="section" id="student-dashboard">
+                <h2 class="section-title">🎯 CSC 121 Quick Access</h2>
+                <div class="quick-dashboard">
+                    <div class="dashboard-item urgent">
+                        <div class="dashboard-icon">📋</div>
+                        <h3>Syllabus</h3>
+                        <p>Course requirements & policies</p>
+                        <a href="https://craieprogramming.org/121/syllabus/" class="dashboard-link">View Syllabus</a>
+                    </div>
+                    <div class="dashboard-item important">
+                        <div class="dashboard-icon">📚</div>
+                        <h3>Course Notes</h3>
+                        <p>Detailed lecture information</p>
+                        <a href="https://craieprogramming.org/121/notes/" class="dashboard-link">Study Notes</a>
+                    </div>
+                    <div class="dashboard-item helpful">
+                        <div class="dashboard-icon">📝</div>
+                        <h3>Assignments</h3>
+                        <p>Labs, projects & exams</p>
+                        <a href="#assignments" class="dashboard-link">View Work</a>
+                    </div>
+                    <div class="dashboard-item info">
+                        <div class="dashboard-icon">💡</div>
+                        <h3>Examples</h3>
+                        <p>Code samples & demos</p>
+                        <a href="https://craieprogramming.org/121/examples/" class="dashboard-link">Browse Code</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Course Topics -->
+            <section class="section" id="topics">
+                <h2 class="section-title">📖 What We'll Learn This Semester</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>🔤 Basics</h3>
+                        <p>Variables, Data Types, Math Operations, Input/Output</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Study Notes</a>
+                            <a href="https://craieprogramming.org/121/examples/" class="card-link">See Examples</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>🔀 Control Structures</h3>
+                        <p>Decisions, Branching, Repetition (loops)</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Study Notes</a>
+                            <a href="https://craieprogramming.org/121/examples/" class="card-link">See Examples</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>⚙️ Functions</h3>
+                        <p>Use, Design, Features, Writing your own</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Study Notes</a>
+                            <a href="https://craieprogramming.org/121/examples/" class="card-link">See Examples</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>📦 Abstraction</h3>
+                        <p>ADTs, <strong>struct</strong>ures, <strong>class</strong>es</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Study Notes</a>
+                            <a href="https://craieprogramming.org/121/examples/" class="card-link">See Examples</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>💾 Storage</h3>
+                        <p><strong>array</strong>s, <strong>vector</strong>s, <strong>string</strong>s</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Study Notes</a>
+                            <a href="https://craieprogramming.org/121/examples/" class="card-link">See Examples</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>🔍 Search Tips</h3>
+                        <p>How to search this site effectively with Google</p>
+                        <div class="card-links">
+                            <a href="#search-tips" class="card-link">Learn Tips</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Assignments -->
+            <section class="section" id="assignments">
+                <h2 class="section-title">📝 Course Assignments</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>🧪 Labs</h3>
+                        <p>Hands-on programming exercises to practice concepts</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/labs/" class="card-link">View Labs</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>🚀 Projects</h3>
+                        <p>Larger programming assignments to demonstrate skills</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/projects/" class="card-link">View Projects</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>📁 Portfolio</h3>
+                        <p>Collection of your best work throughout the semester</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/portfolio/" class="card-link">Portfolio Info</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>📊 Exams</h3>
+                        <p>Tests to assess your understanding of key concepts</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/exams/" class="card-link">Exam Info</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>⭐ Extra Credit</h3>
+                        <p>Non-portfolio opportunities for additional points</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/extra-credit/" class="card-link">Extra Credit</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Past Courses -->
+            <section class="section">
+                <h2 class="section-title">Course Archive</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem;">
+                    <div class="course-table">
+                        <div class="table-header">
+                            <h3>💻 Programming Courses</h3>
+                        </div>
+                        <div class="table-content">
+                            <p style="color: var(--text-secondary); text-align: center;">
+                                Browse materials from previous programming courses including fundamentals, data structures, and advanced topics.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="course-table">
+                        <div class="table-header">
+                            <h3>🔢 Mathematics Courses</h3>
+                        </div>
+                        <div class="table-content">
+                            <p style="color: var(--text-secondary); text-align: center;">
+                                Access resources from discrete mathematics and other math courses I've taught.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Course Materials -->
+            <section class="section" id="materials">
+                <h2 class="section-title">📚 Course Materials</h2>
+                <div class="resources-grid">
+                    <div class="resource-category priority">
+                        <div class="category-header">
+                            <h4>📋 Essential Documents</h4>
+                            <span class="priority-badge">Must Read</span>
+                        </div>
+                        <ul class="resource-list">
+                            <li><a href="https://craieprogramming.org/121/syllabus/">📄 Course Syllabus</a></li>
+                            <li><a href="https://craieprogramming.org/121/notes/">📖 Lecture Notes</a></li>
+                            <li><a href="https://craieprogramming.org/121/topics/">📝 Topics List</a></li>
+                        </ul>
+                    </div>
+                    <div class="resource-category">
+                        <div class="category-header">
+                            <h4>💻 Programming Resources</h4>
+                        </div>
+                        <ul class="resource-list">
+                            <li><a href="https://craieprogramming.org/121/examples/">🔍 Code Examples</a></li>
+                            <li><a href="https://craieprogramming.org/121/style/">✨ Master Style List</a></li>
+                            <li><a href="https://craieprogramming.org/121/lab-guide/">🧪 Getting Around in the Lab</a></li>
+                        </ul>
+                    </div>
+                    <div class="resource-category">
+                        <div class="category-header">
+                            <h4>🎯 Practice & Study</h4>
+                        </div>
+                        <ul class="resource-list">
+                            <li><a href="https://craieprogramming.org/121/questions/">❓ Question Sets</a></li>
+                            <li><a href="https://craieprogramming.org/121/tpq/">🤔 Thought-Provoking Questions (TPQs)</a></li>
+                        </ul>
+                    </div>
+                    <div class="resource-category">
+                        <div class="category-header">
+                            <h4>🛠️ Tools & Software</h4>
+                        </div>
+                        <ul class="resource-list">
+                            <li><a href="https://craieprogramming.org/121/compilers/">💿 Free C++ Compilers</a></li>
+                            <li><a href="https://craieprogramming.org/121/cpp-resources/">🌐 C++ Resources on the Web</a></li>
+                            <li><a href="https://craieprogramming.org/students/">🎓 Essential Student Skills</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Search Tips -->
+            <section class="section" id="search-tips">
+                <h2 class="section-title">🔍 Tips for Searching This Site</h2>
+                <div class="card">
+                    <h3>🎯 Google Site Search</h3>
+                    <p>You can search <em>just</em> this course site by adding this to your Google search:</p>
+                    <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; color: var(--accent-color);">
+                        site:craieprogramming.org inurl:121
+                    </div>
+                    
+                    <h4 style="margin-top: 2rem; color: var(--text-primary);">📝 Example Searches:</h4>
+                    
+                    <div style="margin: 1.5rem 0;">
+                        <strong style="color: var(--accent-color);">To find TPQ information:</strong>
+                        <div style="background: var(--bg-tertiary); padding: 0.75rem; border-radius: 6px; margin: 0.5rem 0; font-family: monospace; font-size: 0.9rem; color: var(--text-secondary);">
+                            how answer (thought provoking questions|question) OR (TPQ|TPQs) site:craieprogramming.org inurl:121
+                        </div>
+                    </div>
+                    
+                    <div style="margin: 1.5rem 0;">
+                        <strong style="color: var(--accent-color);">To search for unit conversion with modulo:</strong>
+                        <div style="background: var(--bg-tertiary); padding: 0.75rem; border-radius: 6px; margin: 0.5rem 0; font-family: monospace; font-size: 0.9rem; color: var(--text-secondary);">
+                            unit convert|conversion modulo site:craieprogramming.org inurl:121
+                        </div>
+                    </div>
+                    
+                    <p style="margin-top: 1.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                        <strong>Pro tip:</strong> Google uses the vertical bar | as shorthand for logical "OR". 
+                        Put terms like "C++" in quotes so Google recognizes the + symbols as important.
+                        You can copy-paste these search examples directly into Google!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Contact Information -->
+            <section class="section" id="contact">
+                <h2 class="section-title">📞 Get in Touch</h2>
+                <div class="contact-grid">
+                    <div class="contact-card office-hours">
+                        <h3>🕐 Office Hours</h3>
+                        <p>Check my current schedule for the most up-to-date office hours. Posted times are always current and match what's beside my office door.</p>
+                        <a href="summer.schedule.pdf" class="contact-link">View Current Schedule</a>
+                    </div>
+                    <div class="contact-card location">
+                        <h3>📍 Find Me</h3>
+                        <p>Harper College - Computer Science Department<br>Part of Mathematical Sciences</p>
+                        <div class="contact-links">
+                            <a href="http://www.harperfacultysenate.org/" class="contact-link">Faculty Info</a>
+                            <a href="http://www.harperadjuncts.org/" class="contact-link">Adjunct Faculty</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 CSC 121 - Computer Programming I | Jason James, Harper College</p>
+            <p style="margin-top: 0.5rem; opacity: 0.7;">Master the fundamentals of C++ programming</p>
+        </div>
+    </footer>
+
+    <!-- Quick Access -->
+    <a href="https://craieprogramming.org/121/syllabus/" class="quick-access" title="Quick access to course syllabus">
+        📋<br><span style="font-size: 0.8rem;">Syllabus</span>
+    </a>
+
+    <script>
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Calendar and Schedule Management
+        function updateCalendarAndSchedule() {
+            const today = new Date();
+            const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+            
+            // Update today's date display
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const todayString = today.toLocaleDateString('en-US', options);
+            document.getElementById('today-date').textContent = `Today's Schedule - ${todayString}`;
+            
+            // Generate schedule based on day of week
+            const scheduleContent = document.getElementById('schedule-content');
+            let scheduleHTML = '';
+            
+            // Class schedule
+            if (dayOfWeek === 1) { // Monday
+                scheduleHTML += `
+                    <div class="schedule-item office-hours">
+                        <div class="schedule-icon">🕙</div>
+                        <div class="schedule-time">10:00am-11:50am</div>
+                        <div class="schedule-details">
+                            <div class="schedule-title">Office Hours</div>
+                            <div class="schedule-location">📍 D253a/WebEx</div>
+                        </div>
+                    </div>
+                    <div class="schedule-item lab">
+                        <div class="schedule-icon">⚗️</div>
+                        <div class="schedule-time">12:00pm-1:40pm</div>
+                        <div class="schedule-details">
+                            <div class="schedule-title">CSC 121 - Lab Session</div>
+                            <div class="schedule-location">📍 Room D242</div>
+                        </div>
+                    </div>
+                `;
+            } else if (dayOfWeek === 2) { // Tuesday
+                scheduleHTML += `
+                    <div class="schedule-item lecture">
+                        <div class="schedule-icon">📚</div>
+                        <div class="schedule-time">11:00am-1:40pm</div>
+                        <div class="schedule-details">
+                            <div class="schedule-title">CSC 121 - Lecture</div>
+                            <div class="schedule-location">📍 Room D242</div>
+                        </div>
+                    </div>
+                    <div class="schedule-item office-hours">
+                        <div class="schedule-icon">🌙</div>
+                        <div class="schedule-time">8:00pm-10:00pm</div>
+                        <div class="schedule-details">
+                            <div class="schedule-title">Evening Office Hours</div>
+                            <div class="schedule-location">💻 WebEx only</div>
+                        </div>
+                    </div>
+                `;
+            } else if (dayOfWeek === 3) { // Wednesday
+                scheduleHTML += `
+                    <div class="schedule-item office-hours">
+                        <div class="schedule-icon">🕙</div>
+                        <div class="schedule-time">10:00am-11:50am</div>
+                        <div class="schedule-details">
+                            <div class="schedule-title">Office Hours</div>
+                            <div class="schedule-location">📍 D253a/WebEx</div>
+                        </div>
+                    </div>
+                    <div class="schedule-item lab">
+                        <div class="schedule-icon">⚗️</div>
+                        <div class="schedule-time">12:00pm-1:40pm</div>
+                        <div class="schedule-details">
+                            <div class="schedule-title">CSC 121 - Lab Session</div>
+                            <div class="schedule-location">📍 Room D242</div>
+                        </div>
+                    </div>
+                `;
+            } else if (dayOfWeek === 4) { // Thursday
+                scheduleHTML += `
+                    <div class="schedule-item lecture">
+                        <div class="schedule-icon">📚</div>
+                        <div class="schedule-time">11:00am-1:40pm</div>
+                        <div class="schedule-details">
+                            <div class="schedule-title">CSC 121 - Lecture</div>
+                            <div class="schedule-location">📍 Room D242</div>
+                        </div>
+                    </div>
+                    <div class="schedule-item office-hours">
+                        <div class="schedule-icon">🌙</div>
+                        <div class="schedule-time">8:00pm-10:00pm</div>
+                        <div class="schedule-details">
+                            <div class="schedule-title">Evening Office Hours</div>
+                            <div class="schedule-location">💻 WebEx only</div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Weekend or Friday - no scheduled activities
+                scheduleHTML = `
+                    <div class="no-schedule">
+                        <div style="font-size: 2rem; margin-bottom: 1rem;">🌅</div>
+                        <div>No scheduled classes or office hours today</div>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem;">Enjoy your break! Use this time to work on assignments.</div>
+                    </div>
+                `;
+            }
+            
+            scheduleContent.innerHTML = scheduleHTML;
+        }
+
+        // Generate calendar for current month
+        function generateCalendar() {
+            const today = new Date();
+            const currentMonth = today.getMonth();
+            const currentYear = today.getFullYear();
+            const currentDate = today.getDate();
+            
+            // Update month/year header
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+            document.getElementById('calendar-month-year').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const daysInPrevMonth = new Date(currentYear, currentMonth, 0).getDate();
+            
+            // Clear existing calendar (keep headers)
+            const calendarGrid = document.querySelector('.calendar-grid');
+            const dayHeaders = calendarGrid.querySelectorAll('.calendar-day-header');
+            calendarGrid.innerHTML = '';
+            dayHeaders.forEach(header => calendarGrid.appendChild(header));
+            
+            // Add previous month's trailing days
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day other-month';
+                dayElement.textContent = daysInPrevMonth - i;
+                calendarGrid.appendChild(dayElement);
+            }
+            
+            // Add current month's days
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                if (day === currentDate) {
+                    dayElement.classList.add('current');
+                }
+                dayElement.textContent = day;
+                calendarGrid.appendChild(dayElement);
+            }
+            
+            // Add next month's leading days
+            const totalCells = 42; // 6 rows × 7 days
+            const cellsUsed = firstDay + daysInMonth;
+            for (let day = 1; cellsUsed + day - 1 < totalCells; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day other-month';
+                dayElement.textContent = day;
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+
+        // Initialize calendar and schedule on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            generateCalendar();
+            updateCalendarAndSchedule();
+        });
+
+        // Add entrance animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe cards for animation
+        document.querySelectorAll('.card, .course-table').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
