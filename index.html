@@ -1,11 +1,9 @@
-                <div class="course-grid"> 
-                    <div class="course-item active-course">
-                        <div class="course-status">🟢<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jason James - Computer Science Instructor</title>
+    <title>CSC 121 - Computer Programming I</title>
     <style>
         * {
             margin: 0;
@@ -43,7 +41,7 @@
             background-image: 
                 radial-gradient(circle at 25% 25%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 75% 75%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
-            padding-top: 50px; /* Reduced space for compact nav */
+            padding-top: 50px;
         }
 
         /* Navigation Bar */
@@ -160,6 +158,304 @@
             transform: translateY(-1px) !important;
             box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4) !important;
             background: linear-gradient(135deg, #7c3aed, #0284c7) !important;
+        }
+
+        /* Calendar and Schedule Section */
+        .schedule-section {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+        }
+
+        .schedule-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            align-items: stretch;
+        }
+
+        .schedule-container.bottom-row {
+            margin-top: 1rem;
+            align-items: start;
+        }
+
+        /* Mini Calendar - FIXED HEIGHT */
+        .mini-calendar {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .calendar-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .calendar-header {
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 3px;
+            flex: 1;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            padding: 0.5rem 0.25rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 28px;
+        }
+
+        .calendar-day:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .calendar-day.current {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+        }
+
+        .calendar-day.other-month {
+            color: var(--text-muted);
+        }
+
+        /* Today's Schedule */
+        .today-schedule {
+            background: linear-gradient(135deg, var(--glass-bg) 0%, var(--bg-card) 100%);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .today-schedule::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--info-color), var(--success-color), var(--warning-color));
+        }
+
+        .schedule-header {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .schedule-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .schedule-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary-color);
+        }
+
+        .schedule-item.office-hours::before {
+            background: linear-gradient(180deg, var(--info-color), #0284c7);
+        }
+
+        .schedule-item.lecture::before {
+            background: linear-gradient(180deg, var(--success-color), #059669);
+        }
+
+        .schedule-item.lab::before {
+            background: linear-gradient(180deg, var(--warning-color), #f97316);
+        }
+
+        .schedule-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: var(--bg-card-hover);
+        }
+
+        .schedule-time {
+            font-weight: 700;
+            color: var(--text-primary);
+            min-width: 100px;
+            font-size: 1rem;
+            background: var(--bg-tertiary);
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .schedule-details {
+            flex: 1;
+        }
+
+        .schedule-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .schedule-location {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .schedule-icon {
+            font-size: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .office-hours .schedule-icon {
+            color: var(--info-color);
+        }
+
+        .lecture .schedule-icon {
+            color: var(--success-color);
+        }
+
+        .lab .schedule-icon {
+            color: var(--warning-color);
+        }
+
+        .no-schedule {
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+            padding: 3rem;
+            background: var(--glass-bg);
+            border-radius: 12px;
+            border: 1px dashed var(--border-color);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* TopHat Button */
+        .tophat-button {
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+            min-height: 60px;
+            backdrop-filter: blur(20px);
+        }
+
+        .tophat-button:hover {
+            background: linear-gradient(135deg, #357abd, #2968a3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        .tophat-logo {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        /* Upcoming Events Dropdown - aligned with TopHat button */
+        .upcoming-events {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .events-header {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            min-height: 60px;
         }
 
         /* Header */
@@ -450,246 +746,6 @@
             transform: scale(1.05);
         }
 
-        /* Course Tables */
-        .course-table {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--glass-border);
-        }
-
-        .table-header {
-            background: var(--gradient);
-            color: white;
-            padding: 1.5rem;
-            font-weight: 600;
-            text-align: center;
-            position: relative;
-        }
-
-        .table-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .table-content {
-            padding: 2rem;
-            background: var(--bg-secondary);
-        }
-
-        .course-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-
-        .course-item {
-            padding: 1.5rem;
-            background: var(--bg-card);
-            border-radius: 12px;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-color);
-        }
-
-        .course-item:hover {
-            background: var(--bg-card-hover);
-            color: var(--text-primary);
-            transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
-        }
-
-        /* Course improvements */
-        .course-item.active-course {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 2px solid var(--primary-color);
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.2);
-        }
-        .course-item.active-course {
-            background: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%);
-            border: 2px solid var(--primary-color);
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .course-status {
-            display: inline-block;
-            background: var(--success-color);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
-
-        .course-item h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        /* Resource category improvements */
-        .resource-category.priority {
-            border: 2px solid var(--warning-color);
-            background: linear-gradient(135deg, #fef3c7 0%, white 20%);
-        }
-
-        .category-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .priority-badge {
-            background: var(--warning-color);
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .resource-list a {
-            display: flex;
-            align-items: center;
-            padding: 0.5rem;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .resource-list a:hover {
-            background: var(--bg-secondary);
-            color: var(--primary-color);
-            transform: translateX(5px);
-        }
-
-        /* Contact section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .contact-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .contact-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: 4px;
-            border-radius: 2px;
-        }
-
-        .contact-card.office-hours::before {
-            background: linear-gradient(180deg, var(--warning-color), #f97316);
-        }
-
-        .contact-card.location::before {
-            background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
-        }
-
-        .contact-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-
-        .contact-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .contact-link {
-            display: inline-block;
-            background: var(--primary-color);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-top: 1rem;
-            margin-right: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .contact-link:hover {
-            background: var(--secondary-color);
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
-        }
-        .course-table {
-            background: var(--bg-card);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border: 1px solid var(--border-color);
-        }
-
-        .table-header {
-            background: var(--gradient);
-            color: white;
-            padding: 1.5rem;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        .table-content {
-            padding: 2rem;
-        }
-
-        .course-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-
-        .course-item {
-            padding: 1rem;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .course-item:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: scale(1.02);
-        }
-
         /* Resources Section */
         .resources-grid {
             display: grid;
@@ -720,6 +776,22 @@
             border: 2px solid var(--warning-color);
             background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, var(--glass-bg) 20%);
             box-shadow: 0 8px 32px rgba(245, 158, 11, 0.2);
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .priority-badge {
+            background: var(--warning-color);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
         }
 
         .resource-category h4 {
@@ -763,6 +835,215 @@
             margin-top: 4rem;
         }
 
+        /* Quick access widget */
+        .quick-access-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 
+                0 10px 25px rgba(139, 92, 246, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--glass-border);
+            z-index: 1000;
+            min-width: 280px;
+            transition: all 0.3s ease;
+        }
+
+        .quick-access-widget:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 20px 40px rgba(139, 92, 246, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .widget-header {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .email-button {
+            display: block;
+            background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        .email-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+            background: linear-gradient(135deg, var(--secondary-color), #0284c7);
+        }
+
+        .search-section {
+            border-top: 1px solid var(--glass-border);
+            padding-top: 1rem;
+        }
+
+        .search-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+            background: var(--bg-card);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Upcoming Events Dropdown */
+        .upcoming-events {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        .events-header {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .events-header:hover {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+        }
+
+        .events-title {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .events-arrow {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .events-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: var(--bg-card);
+            border-radius: 0 0 12px 12px;
+        }
+
+        .upcoming-events.open .events-content {
+            max-height: 400px;
+        }
+
+        .upcoming-events.open .events-arrow {
+            transform: rotate(180deg);
+        }
+
+        .events-list {
+            padding: 1rem;
+        }
+
+        .event-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .event-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .event-item:hover {
+            background: var(--bg-card-hover);
+            transform: translateX(3px);
+        }
+
+        .event-item.exam {
+            border-left-color: var(--warning-color);
+        }
+
+        .event-item.portfolio {
+            border-left-color: var(--success-color);
+        }
+
+        .event-item.project {
+            border-left-color: var(--info-color);
+        }
+
+        .event-date {
+            font-weight: 600;
+            color: var(--text-primary);
+            min-width: 60px;
+            font-size: 0.8rem;
+        }
+
+        .event-details {
+            flex: 1;
+        }
+
+        .event-title {
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            margin-bottom: 0.1rem;
+        }
+
+        .event-description {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .event-icon {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
@@ -781,245 +1062,6 @@
                 padding: 2rem 0;
             }
 
-            .nav-menu {
-                gap: 0.5rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .nav-link {
-                padding: 0.4rem 0.6rem;
-                font-size: 0.8rem;
-            }
-
-            .nav-container {
-                padding: 0 0.5rem;
-            }
-
-            .dropdown {
-                min-width: 180px;
-            }
-
-            body {
-                padding-top: 60px; /* Adjust for mobile */
-            }
-        }
-
-        /* Calendar and Schedule Section */
-        .schedule-section {
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 0;
-        }
-
-        .schedule-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 2rem;
-            align-items: start;
-        }
-
-        /* Mini Calendar */
-        .mini-calendar {
-            background: var(--bg-card);
-            border-radius: 12px;
-            padding: 1rem;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .calendar-header {
-            text-align: center;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 2px;
-            min-width: 200px;
-        }
-
-        .calendar-day-header {
-            text-align: center;
-            font-size: 0.7rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            padding: 0.25rem;
-        }
-
-        .calendar-day {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .calendar-day:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .calendar-day.current {
-            background: var(--primary-color);
-            color: white;
-            font-weight: 600;
-            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
-        }
-
-        .calendar-day.other-month {
-            color: var(--text-muted);
-        }
-
-        /* Today's Schedule */
-        .today-schedule {
-            background: linear-gradient(135deg, var(--glass-bg) 0%, var(--bg-card) 100%);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid var(--glass-border);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .today-schedule::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-color), var(--info-color), var(--success-color), var(--warning-color));
-        }
-
-        .schedule-header {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .schedule-item {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            padding: 1.25rem;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .schedule-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: var(--primary-color);
-        }
-
-        .schedule-item.office-hours::before {
-            background: linear-gradient(180deg, var(--info-color), #0284c7);
-        }
-
-        .schedule-item.lecture::before {
-            background: linear-gradient(180deg, var(--success-color), #059669);
-        }
-
-        .schedule-item.lab::before {
-            background: linear-gradient(180deg, var(--warning-color), #f97316);
-        }
-
-        .schedule-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 
-                0 12px 40px rgba(0, 0, 0, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            background: var(--bg-card-hover);
-        }
-
-        .schedule-time {
-            font-weight: 700;
-            color: var(--text-primary);
-            min-width: 100px;
-            font-size: 1rem;
-            background: var(--bg-tertiary);
-            padding: 0.5rem 0.75rem;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-        }
-
-        .schedule-details {
-            flex: 1;
-        }
-
-        .schedule-title {
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .schedule-location {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .schedule-icon {
-            font-size: 1.5rem;
-            opacity: 0.8;
-        }
-
-        .office-hours .schedule-icon {
-            color: var(--info-color);
-        }
-
-        .lecture .schedule-icon {
-            color: var(--success-color);
-        }
-
-        .lab .schedule-icon {
-            color: var(--warning-color);
-        }
-
-        .no-schedule {
-            text-align: center;
-            color: var(--text-secondary);
-            font-style: italic;
-            padding: 3rem;
-            background: var(--glass-bg);
-            border-radius: 12px;
-            border: 1px dashed var(--border-color);
-        }
-
-        @media (max-width: 768px) {
             .schedule-container {
                 grid-template-columns: 1fr;
                 gap: 1rem;
@@ -1028,62 +1070,14 @@
             .mini-calendar {
                 justify-self: center;
             }
-        }
-        .quick-access {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            color: var(--accent-color);
-            padding: 1rem;
-            border-radius: 50px;
-            box-shadow: 
-                0 10px 25px rgba(139, 92, 246, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            border: 1px solid var(--glass-border);
-            text-align: center;
-            min-width: 80px;
-        }
 
-        .quick-access:hover {
-            transform: scale(1.1);
-            box-shadow: 
-                0 15px 35px rgba(139, 92, 246, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            background: var(--primary-color);
-            color: white;
-        }1rem;
+            .quick-access-widget {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+                min-width: auto;
+                max-width: none;
             }
-            
-            .card-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Quick access badge */
-        .quick-access {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--primary-color);
-            color: white;
-            padding: 1rem;
-            border-radius: 50px;
-            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .quick-access:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 35px rgba(37, 99, 235, 0.4);
         }
     </style>
 </head>
@@ -1100,9 +1094,9 @@
                     <div class="dropdown">
                         <a href="https://craieprogramming.org/121/labs/" class="dropdown-link">🧪 Labs</a>
                         <a href="https://craieprogramming.org/121/projects/" class="dropdown-link">🚀 Projects</a>
-                        <a href="https://craieprogramming.org/portfolio.html" class="dropdown-link">📁 What's a portfolio again?</a>
+                        <a href="https://craieprogramming.org/portfolio.html" class="dropdown-link">📁 Portfolio</a>
                         <a href="https://craieprogramming.org/121/exams/" class="dropdown-link">📊 Exams</a>
-                        <a href="https://craieprogramming.org/compsci.xcred.html" class="dropdown-link">⭐ Non-Portfolio Extra Credit</a>
+                        <a href="https://craieprogramming.org/compsci.xcred.html" class="dropdown-link">⭐ Extra Credit</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -1112,71 +1106,99 @@
                     <a href="https://craieprogramming.org/121/samples/" class="nav-link">💻 Examples</a>
                 </li>
                 <li class="nav-item">
-                    <a href="https://craieprogramming.org/121/syllabus/" class="nav-link">📋 Syllabus</a>
-                </li>
-                <li class="nav-item">
-                    <a href="mailto:craie@acm.org?subject=CSC%20121%20-%20Question%20from%20Student" class="nav-link contact-email">📧 Email Prof</a>
+                    <a href="https://craieprogramming.org/121/syl_bus.html" class="nav-link">📋 Syllabus</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <!-- Calendar and Schedule Section -->
+            <!-- Calendar and Schedule Section -->
     <section class="schedule-section">
         <div class="schedule-container">
             <!-- Mini Calendar -->
             <div class="mini-calendar">
-                <div class="calendar-header" id="calendar-month-year">June 2025</div>
-                <div class="calendar-grid">
-                    <div class="calendar-day-header">S</div>
-                    <div class="calendar-day-header">M</div>
-                    <div class="calendar-day-header">T</div>
-                    <div class="calendar-day-header">W</div>
-                    <div class="calendar-day-header">T</div>
-                    <div class="calendar-day-header">F</div>
-                    <div class="calendar-day-header">S</div>
-                    <!-- Calendar days will be populated by JavaScript -->
-                    <div class="calendar-day other-month">1</div>
-                    <div class="calendar-day">2</div>
-                    <div class="calendar-day">3</div>
-                    <div class="calendar-day">4</div>
-                    <div class="calendar-day">5</div>
-                    <div class="calendar-day">6</div>
-                    <div class="calendar-day">7</div>
-                    <div class="calendar-day">8</div>
-                    <div class="calendar-day">9</div>
-                    <div class="calendar-day current">10</div>
-                    <div class="calendar-day">11</div>
-                    <div class="calendar-day">12</div>
-                    <div class="calendar-day">13</div>
-                    <div class="calendar-day">14</div>
-                    <div class="calendar-day">15</div>
-                    <div class="calendar-day">16</div>
-                    <div class="calendar-day">17</div>
-                    <div class="calendar-day">18</div>
-                    <div class="calendar-day">19</div>
-                    <div class="calendar-day">20</div>
-                    <div class="calendar-day">21</div>
-                    <div class="calendar-day">22</div>
-                    <div class="calendar-day">23</div>
-                    <div class="calendar-day">24</div>
-                    <div class="calendar-day">25</div>
-                    <div class="calendar-day">26</div>
-                    <div class="calendar-day">27</div>
-                    <div class="calendar-day">28</div>
-                    <div class="calendar-day">29</div>
-                    <div class="calendar-day">30</div>
-                    <div class="calendar-day other-month">31</div>
+                <div class="calendar-section">
+                    <div class="calendar-header" id="calendar-month-year">June 2025</div>
+                    <div class="calendar-grid">
+                        <div class="calendar-day-header">S</div>
+                        <div class="calendar-day-header">M</div>
+                        <div class="calendar-day-header">T</div>
+                        <div class="calendar-day-header">W</div>
+                        <div class="calendar-day-header">T</div>
+                        <div class="calendar-day-header">F</div>
+                        <div class="calendar-day-header">S</div>
+                        <!-- Calendar days will be populated by JavaScript -->
+                        <div class="calendar-day other-month">1</div>
+                        <div class="calendar-day">2</div>
+                        <div class="calendar-day">3</div>
+                        <div class="calendar-day">4</div>
+                        <div class="calendar-day">5</div>
+                        <div class="calendar-day">6</div>
+                        <div class="calendar-day">7</div>
+                        <div class="calendar-day">8</div>
+                        <div class="calendar-day">9</div>
+                        <div class="calendar-day">10</div>
+                        <div class="calendar-day current">11</div>
+                        <div class="calendar-day">12</div>
+                        <div class="calendar-day">13</div>
+                        <div class="calendar-day">14</div>
+                        <div class="calendar-day">15</div>
+                        <div class="calendar-day">16</div>
+                        <div class="calendar-day">17</div>
+                        <div class="calendar-day">18</div>
+                        <div class="calendar-day">19</div>
+                        <div class="calendar-day">20</div>
+                        <div class="calendar-day">21</div>
+                        <div class="calendar-day">22</div>
+                        <div class="calendar-day">23</div>
+                        <div class="calendar-day">24</div>
+                        <div class="calendar-day">25</div>
+                        <div class="calendar-day">26</div>
+                        <div class="calendar-day">27</div>
+                        <div class="calendar-day">28</div>
+                        <div class="calendar-day">29</div>
+                        <div class="calendar-day">30</div>
+                        <div class="calendar-day other-month">31</div>
+                    </div>
                 </div>
             </div>
 
             <!-- Today's Schedule -->
             <div class="today-schedule">
                 <div class="schedule-header">
-                    📅 <span id="today-date">Today's Schedule - Tuesday, June 10</span>
+                    📅 <span id="today-date">Today's Schedule - Wednesday, June 11</span>
                 </div>
-                <div id="schedule-content">
+                <div class="schedule-content" id="schedule-content">
                     <!-- Schedule items will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- TopHat Button and Upcoming Events side by side -->
+        <div class="schedule-container bottom-row">
+            <a href="https://app.tophat.com/e/727389/content/course-work" target="_blank" class="tophat-button">
+                <svg class="tophat-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Top row: purple rectangle and pink rectangle -->
+                    <rect x="10" y="10" width="35" height="25" fill="#8B5CF6"/>
+                    <rect x="45" y="10" width="35" height="25" fill="#E53E3E"/>
+                    
+                    <!-- Middle: pink rectangle (centered below) -->
+                    <rect x="32.5" y="35" width="25" height="25" fill="#E53E3E"/>
+                    
+                    <!-- Bottom: purple square (smaller, centered) -->
+                    <rect x="32.5" y="75" width="25" height="20" fill="#8B5CF6"/>
+                </svg>
+                TopHat Coursework
+            </a>
+            <div class="upcoming-events" id="upcoming-events-dropdown">
+                <div class="events-header" onclick="toggleEventsDropdown()">
+                    <div class="events-title">🗓️ Upcoming This Week</div>
+                    <div class="events-arrow">▼</div>
+                </div>
+                <div class="events-content">
+                    <div class="events-list" id="upcoming-events-content">
+                        <!-- Events will be populated by JavaScript -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -1196,185 +1218,74 @@
     <!-- Main Content -->
     <main class="main">
         <div class="container">
-            <!-- About Section -->
-            <section class="section">
-                <h2 class="section-title">👨‍🏫 About Your Instructor</h2>
-                <div class="card-grid">
-                    <div class="card">
-                        <h3>🎓 Jason James</h3>
-                        <p>Computer Science Instructor at Harper College. I teach programming and mathematics, helping students develop problem-solving skills and programming expertise.</p>
-                        <div class="card-links">
-                            <a href="http://www.harpercollege.edu/" class="card-link">Harper College</a>
-                            <a href="https://www.harpercollege.edu/academics/stem/computer-science/index.php" class="card-link">CS Department</a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3>📅 Office Hours & Schedule</h3>
-                        <p>Need help or have questions? Check my current schedule for office hours and the best times to reach me.</p>
-                        <div class="card-links">
-                            <a href="https://craieprogramming.org/summer.schedule.pdf" class="card-link">Current Schedule</a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3>🏫 Department Info</h3>
-                        <p>Computer Science at Harper College is part of the Mathematical Sciences department, fostering interdisciplinary learning.</p>
-                        <div class="card-links">
-                            <a href="http://www.harperfacultysenate.org/" class="card-link">Faculty Senate</a>
-                            <a href="http://www.harperadjuncts.org/" class="card-link">Adjunct Faculty</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <!-- Quick Access Dashboard -->
             <section class="section" id="student-dashboard">
-                <h2 class="section-title">🎯 CSC 121 Quick Access</h2>
+                <h2 class="section-title">🎯 What You Need Right Now</h2>
                 <div class="quick-dashboard">
                     <div class="dashboard-item urgent">
-                        <div class="dashboard-icon">📋</div>
-                        <h3>Syllabus</h3>
-                        <p>Course requirements & policies</p>
-                        <a href="https://craieprogramming.org/121/syllabus/" class="dashboard-link">View Syllabus</a>
+                        <div class="dashboard-icon">📝</div>
+                        <h3>Current Assignments</h3>
+                        <p>Labs, projects & deadlines</p>
+                        <a href="#assignments" class="dashboard-link">View Work</a>
                     </div>
                     <div class="dashboard-item important">
                         <div class="dashboard-icon">📚</div>
                         <h3>Course Notes</h3>
-                        <p>Detailed lecture information</p>
-                        <a href="https://craieprogramming.org/121/notes/" class="dashboard-link">Study Notes</a>
+                        <p>Today's topics & examples</p>
+                        <a href="https://craieprogramming.org/121/notes/" class="dashboard-link">Study Now</a>
                     </div>
                     <div class="dashboard-item helpful">
-                        <div class="dashboard-icon">📝</div>
-                        <h3>Assignments</h3>
-                        <p>Labs, projects & exams</p>
-                        <a href="#assignments" class="dashboard-link">View Work</a>
+                        <div class="dashboard-icon">📋</div>
+                        <h3>Syllabus</h3>
+                        <p>Policies & requirements</p>
+                        <a href="https://craieprogramming.org/121/syl_bus.html" class="dashboard-link">Read Rules</a>
                     </div>
                     <div class="dashboard-item info">
-                        <div class="dashboard-icon">💡</div>
-                        <h3>Examples</h3>
-                        <p>Code samples & demos</p>
-                        <a href="https://craieprogramming.org/121/examples/" class="dashboard-link">Browse Code</a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Course Topics -->
-            <section class="section" id="topics">
-                <h2 class="section-title">📖 What We'll Learn This Semester</h2>
-                <div class="card-grid">
-                    <div class="card">
-                        <h3>🔤 Basics</h3>
-                        <p>Variables, Data Types, Math Operations, Input/Output</p>
-                        <div class="card-links">
-                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Study Notes</a>
-                            <a href="https://craieprogramming.org/121/examples/" class="card-link">See Examples</a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3>🔀 Control Structures</h3>
-                        <p>Decisions, Branching, Repetition (loops)</p>
-                        <div class="card-links">
-                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Study Notes</a>
-                            <a href="https://craieprogramming.org/121/examples/" class="card-link">See Examples</a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3>⚙️ Functions</h3>
-                        <p>Use, Design, Features, Writing your own</p>
-                        <div class="card-links">
-                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Study Notes</a>
-                            <a href="https://craieprogramming.org/121/examples/" class="card-link">See Examples</a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3>📦 Abstraction</h3>
-                        <p>ADTs, <strong>struct</strong>ures, <strong>class</strong>es</p>
-                        <div class="card-links">
-                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Study Notes</a>
-                            <a href="https://craieprogramming.org/121/examples/" class="card-link">See Examples</a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3>💾 Storage</h3>
-                        <p><strong>array</strong>s, <strong>vector</strong>s, <strong>string</strong>s</p>
-                        <div class="card-links">
-                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Study Notes</a>
-                            <a href="https://craieprogramming.org/121/examples/" class="card-link">See Examples</a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3>🔍 Search Tips</h3>
-                        <p>How to search this site effectively with Google</p>
-                        <div class="card-links">
-                            <a href="#search-tips" class="card-link">Learn Tips</a>
-                        </div>
+                        <div class="dashboard-icon">🔍</div>
+                        <h3>Code Examples</h3>
+                        <p>Working C++ demos</p>
+                        <a href="https://craieprogramming.org/121/samples/" class="dashboard-link">See Code</a>
                     </div>
                 </div>
             </section>
 
             <!-- Assignments -->
             <section class="section" id="assignments">
-                <h2 class="section-title">📝 Course Assignments</h2>
+                <h2 class="section-title">📝 Your Work This Semester</h2>
                 <div class="card-grid">
                     <div class="card">
                         <h3>🧪 Labs</h3>
-                        <p>Hands-on programming exercises to practice concepts</p>
+                        <p>Weekly hands-on programming exercises. Practice the concepts from lecture with guided coding problems.</p>
                         <div class="card-links">
-                            <a href="https://craieprogramming.org/121/labs/" class="card-link">View Labs</a>
+                            <a href="https://craieprogramming.org/121/labs/" class="card-link">Current Labs</a>
                         </div>
                     </div>
                     <div class="card">
                         <h3>🚀 Projects</h3>
-                        <p>Larger programming assignments to demonstrate skills</p>
+                        <p>Larger programming assignments that demonstrate your growing skills. Apply multiple concepts together.</p>
                         <div class="card-links">
                             <a href="https://craieprogramming.org/121/projects/" class="card-link">View Projects</a>
                         </div>
                     </div>
                     <div class="card">
                         <h3>📁 Portfolio</h3>
-                        <p>Collection of your best work throughout the semester</p>
+                        <p>Your best work collected and polished. Shows your programming journey and growth.</p>
                         <div class="card-links">
-                            <a href="https://craieprogramming.org/121/portfolio/" class="card-link">Portfolio Info</a>
+                            <a href="https://craieprogramming.org/portfolio.html" class="card-link">Portfolio Guide</a>
                         </div>
                     </div>
                     <div class="card">
                         <h3>📊 Exams</h3>
-                        <p>Tests to assess your understanding of key concepts</p>
+                        <p>Tests covering key programming concepts, problem-solving, and code analysis.</p>
                         <div class="card-links">
                             <a href="https://craieprogramming.org/121/exams/" class="card-link">Exam Info</a>
                         </div>
                     </div>
                     <div class="card">
                         <h3>⭐ Extra Credit</h3>
-                        <p>Non-portfolio opportunities for additional points</p>
+                        <p>Optional opportunities to explore topics beyond the regular curriculum.</p>
                         <div class="card-links">
-                            <a href="https://craieprogramming.org/121/extra-credit/" class="card-link">Extra Credit</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Past Courses -->
-            <section class="section">
-                <h2 class="section-title">Course Archive</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem;">
-                    <div class="course-table">
-                        <div class="table-header">
-                            <h3>💻 Programming Courses</h3>
-                        </div>
-                        <div class="table-content">
-                            <p style="color: var(--text-secondary); text-align: center;">
-                                Browse materials from previous programming courses including fundamentals, data structures, and advanced topics.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="course-table">
-                        <div class="table-header">
-                            <h3>🔢 Mathematics Courses</h3>
-                        </div>
-                        <div class="table-content">
-                            <p style="color: var(--text-secondary); text-align: center;">
-                                Access resources from discrete mathematics and other math courses I've taught.
-                            </p>
+                            <a href="https://craieprogramming.org/compsci.xcred.html" class="card-link">Bonus Work</a>
                         </div>
                     </div>
                 </div>
@@ -1382,17 +1293,17 @@
 
             <!-- Course Materials -->
             <section class="section" id="materials">
-                <h2 class="section-title">📚 Course Materials</h2>
+                <h2 class="section-title">📚 Study Materials & Resources</h2>
                 <div class="resources-grid">
                     <div class="resource-category priority">
                         <div class="category-header">
-                            <h4>📋 Essential Documents</h4>
-                            <span class="priority-badge">Must Read</span>
+                            <h4>📖 Core Learning</h4>
+                            <span class="priority-badge">Start Here</span>
                         </div>
                         <ul class="resource-list">
-                            <li><a href="https://craieprogramming.org/121/syllabus/">📄 Course Syllabus</a></li>
+                            <li><a href="https://craieprogramming.org/121/syl_bus.html">📄 Course Syllabus</a></li>
                             <li><a href="https://craieprogramming.org/121/notes/">📖 Lecture Notes</a></li>
-                            <li><a href="https://craieprogramming.org/121/topics/">📝 Topics List</a></li>
+                            <li><a href="https://craieprogramming.org/121/syl_bus.html#topics">📝 Topics List</a></li>
                         </ul>
                     </div>
                     <div class="resource-category">
@@ -1400,9 +1311,9 @@
                             <h4>💻 Programming Resources</h4>
                         </div>
                         <ul class="resource-list">
-                            <li><a href="https://craieprogramming.org/121/examples/">🔍 Code Examples</a></li>
-                            <li><a href="https://craieprogramming.org/121/style/">✨ Master Style List</a></li>
-                            <li><a href="https://craieprogramming.org/121/lab-guide/">🧪 Getting Around in the Lab</a></li>
+                            <li><a href="https://craieprogramming.org/121/samples/">🔍 Code Examples</a></li>
+                            <li><a href="https://craieprogramming.org/121/syl_bus.html">✨ Course Information</a></li>
+                            <li><a href="https://craieprogramming.org/121/syl_bus.html#software">🧪 Software Setup</a></li>
                         </ul>
                     </div>
                     <div class="resource-category">
@@ -1410,72 +1321,119 @@
                             <h4>🎯 Practice & Study</h4>
                         </div>
                         <ul class="resource-list">
-                            <li><a href="https://craieprogramming.org/121/questions/">❓ Question Sets</a></li>
-                            <li><a href="https://craieprogramming.org/121/tpq/">🤔 Thought-Provoking Questions (TPQs)</a></li>
+                            <li><a href="https://craieprogramming.org/121/notes/">❓ Study Materials</a></li>
+                            <li><a href="https://craieprogramming.org/121/notes/">🤔 Online Notes & Resources</a></li>
                         </ul>
                     </div>
                     <div class="resource-category">
                         <div class="category-header">
-                            <h4>🛠️ Tools & Software</h4>
+                            <h4>🛠️ Tools & Setup</h4>
                         </div>
                         <ul class="resource-list">
-                            <li><a href="https://craieprogramming.org/121/compilers/">💿 Free C++ Compilers</a></li>
-                            <li><a href="https://craieprogramming.org/121/cpp-resources/">🌐 C++ Resources on the Web</a></li>
-                            <li><a href="https://craieprogramming.org/students/">🎓 Essential Student Skills</a></li>
+                            <li><a href="https://craieprogramming.org/121/syl_bus.html#software">💿 Software Setup Guide</a></li>
+                            <li><a href="https://craieprogramming.org/121/notes/">🌐 C++ Resources & Notes</a></li>
+                            <li><a href="https://craieprogramming.org/121/syl_bus.html">🎓 Course Requirements</a></li>
                         </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Course Topics Overview -->
+            <section class="section" id="topics">
+                <h2 class="section-title">📖 C++ Programming Topics This 8-Week Course</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>🔤 Week 1-2: Basics</h3>
+                        <p>Variables, Data Types, Math Operations, Input/Output</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Notes</a>
+                            <a href="https://craieprogramming.org/121/samples/" class="card-link">Examples</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>🔀 Week 3-4: Control</h3>
+                        <p>Decisions (if/else), Branching, Repetition (loops)</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Notes</a>
+                            <a href="https://craieprogramming.org/121/samples/" class="card-link">Examples</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>⚙️ Week 5-6: Functions</h3>
+                        <p>Using functions, Design principles, Writing your own</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Notes</a>
+                            <a href="https://craieprogramming.org/121/samples/" class="card-link">Examples</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>📦 Week 7: Abstraction</h3>
+                        <p>ADTs, <strong>struct</strong>ures, <strong>class</strong>es</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Notes</a>
+                            <a href="https://craieprogramming.org/121/samples/" class="card-link">Examples</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>💾 Week 8: Storage</h3>
+                        <p><strong>array</strong>s, <strong>vector</strong>s, <strong>string</strong>s</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Notes</a>
+                            <a href="https://craieprogramming.org/121/samples/" class="card-link">Examples</a>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <!-- Search Tips -->
             <section class="section" id="search-tips">
-                <h2 class="section-title">🔍 Tips for Searching This Site</h2>
+                <h2 class="section-title">🔍 How to Search This Site</h2>
                 <div class="card">
                     <h3>🎯 Google Site Search</h3>
-                    <p>You can search <em>just</em> this course site by adding this to your Google search:</p>
+                    <p>Search <em>just</em> this course site by adding this to your Google search:</p>
                     <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; color: var(--accent-color);">
                         site:craieprogramming.org inurl:121
                     </div>
                     
-                    <h4 style="margin-top: 2rem; color: var(--text-primary);">📝 Example Searches:</h4>
+                    <h4 style="margin-top: 2rem; color: var(--text-primary);">📝 Copy These Examples:</h4>
                     
                     <div style="margin: 1.5rem 0;">
-                        <strong style="color: var(--accent-color);">To find TPQ information:</strong>
+                        <strong style="color: var(--accent-color);">Find TPQ help:</strong>
                         <div style="background: var(--bg-tertiary); padding: 0.75rem; border-radius: 6px; margin: 0.5rem 0; font-family: monospace; font-size: 0.9rem; color: var(--text-secondary);">
-                            how answer (thought provoking questions|question) OR (TPQ|TPQs) site:craieprogramming.org inurl:121
+                            how answer TPQ site:craieprogramming.org inurl:121
                         </div>
                     </div>
                     
                     <div style="margin: 1.5rem 0;">
-                        <strong style="color: var(--accent-color);">To search for unit conversion with modulo:</strong>
+                        <strong style="color: var(--accent-color);">Find modulo examples:</strong>
                         <div style="background: var(--bg-tertiary); padding: 0.75rem; border-radius: 6px; margin: 0.5rem 0; font-family: monospace; font-size: 0.9rem; color: var(--text-secondary);">
-                            unit convert|conversion modulo site:craieprogramming.org inurl:121
+                            modulo examples site:craieprogramming.org inurl:121
                         </div>
                     </div>
                     
                     <p style="margin-top: 1.5rem; color: var(--text-secondary); font-size: 0.9rem;">
-                        <strong>Pro tip:</strong> Google uses the vertical bar | as shorthand for logical "OR". 
-                        Put terms like "C++" in quotes so Google recognizes the + symbols as important.
-                        You can copy-paste these search examples directly into Google!
+                        <strong>Tip:</strong> Put "C++" in quotes so Google finds the + symbols. Copy-paste these searches into Google!
                     </p>
                 </div>
             </section>
 
-            <!-- Contact Information -->
-            <section class="section" id="contact">
-                <h2 class="section-title">📞 Get in Touch</h2>
-                <div class="contact-grid">
-                    <div class="contact-card office-hours">
+            <!-- Getting Help -->
+            <section class="section" id="help">
+                <h2 class="section-title">🆘 Need Help? Start Here</h2>
+                <div class="card-grid">
+                    <div class="card">
                         <h3>🕐 Office Hours</h3>
-                        <p>Check my current schedule for the most up-to-date office hours. Posted times are always current and match what's beside my office door.</p>
-                        <a href="summer.schedule.pdf" class="contact-link">View Current Schedule</a>
+                        <p>Best time to get help! Check the current schedule - it's always up-to-date.</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/summer.schedule.pdf" class="card-link">View Schedule</a>
+                        </div>
                     </div>
-                    <div class="contact-card location">
-                        <h3>📍 Find Me</h3>
-                        <p>Harper College - Computer Science Department<br>Part of Mathematical Sciences</p>
-                        <div class="contact-links">
-                            <a href="http://www.harperfacultysenate.org/" class="contact-link">Faculty Info</a>
-                            <a href="http://www.harperadjuncts.org/" class="contact-link">Adjunct Faculty</a>
+                    <div class="card">
+                        <h3>📚 Study Resources</h3>
+                        <p>Stuck on homework? Check the notes, examples, and question sets first.</p>
+                        <div class="card-links">
+                            <a href="https://craieprogramming.org/121/notes/" class="card-link">Study Materials</a>
+                            <a href="https://craieprogramming.org/121/syl_bus.html" class="card-link">Course Info</a>
                         </div>
                     </div>
                 </div>
@@ -1491,12 +1449,64 @@
         </div>
     </footer>
 
-    <!-- Quick Access -->
-    <a href="https://craieprogramming.org/121/syllabus/" class="quick-access" title="Quick access to course syllabus">
-        📋<br><span style="font-size: 0.8rem;">Syllabus</span>
-    </a>
+    <!-- Quick Access Widget -->
+    <div class="quick-access-widget">
+        <div class="widget-header">💬 Message Professor</div>
+        
+        <div class="search-section">
+            <input 
+                type="text" 
+                id="quick-search" 
+                class="search-input" 
+                placeholder="Type your message to Professor James..."
+                onkeypress="handleSearchKeypress(event)"
+            >
+        </div>
+    </div>
 
     <script>
+        // Search functionality
+        function handleSearchKeypress(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                
+                const searchInput = document.getElementById('quick-search');
+                const query = searchInput.value.trim();
+                
+                console.log('Enter pressed, message:', query); // Debug line
+                
+                try {
+                    if (query) {
+                        // Create Gmail web compose URL with the message
+                        const subject = encodeURIComponent('CSC 121 - Question from Student');
+                        const body = encodeURIComponent(`Hello Professor James,
+
+${query}
+
+Thank you!`);
+                        
+                        const gmailUrl = `https://mail.google.com/mail/?view=cm&to=craie@acm.org&su=${subject}&body=${body}`;
+                        console.log('Opening Gmail:', gmailUrl); // Debug line
+                        
+                        // Open Gmail in new tab
+                        window.open(gmailUrl, '_blank');
+                        
+                        // Clear the input after sending
+                        searchInput.value = '';
+                        
+                    } else {
+                        // If empty, open basic Gmail compose
+                        const basicGmailUrl = `https://mail.google.com/mail/?view=cm&to=craie@acm.org&su=${encodeURIComponent('CSC 121 - Question from Student')}`;
+                        console.log('Opening basic Gmail:', basicGmailUrl); // Debug line
+                        window.open(basicGmailUrl, '_blank');
+                    }
+                } catch (error) {
+                    console.error('Error opening Gmail:', error);
+                    alert('Unable to open Gmail. Please email craie@acm.org directly.');
+                }
+            }
+        }
+
         // Add smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -1506,6 +1516,74 @@
                 });
             });
         });
+
+        // Toggle upcoming events dropdown
+        function toggleEventsDropdown() {
+            const dropdown = document.getElementById('upcoming-events-dropdown');
+            dropdown.classList.toggle('open');
+        }
+
+        // Update upcoming events
+        function updateUpcomingEvents() {
+            const today = new Date();
+            const eventsContent = document.getElementById('upcoming-events-content');
+            
+            // Define upcoming events based on current date (June 11, 2025)
+            const upcomingEvents = [
+                {
+                    date: 'June 16',
+                    title: 'Lab 5 - Functions and branching',
+                    description: 'Hands-on practice with functions',
+                    type: 'lab',
+                    icon: '🧪'
+                },
+                {
+                    date: 'June 19',
+                    title: 'Exam 1',
+                    description: 'Basic OO Programming concepts',
+                    type: 'exam',
+                    icon: '📊'
+                },
+                {
+                    date: 'June 21',
+                    title: 'Portfolio 1 Due',
+                    description: 'First portfolio submission',
+                    type: 'portfolio',
+                    icon: '📁'
+                },
+                {
+                    date: 'June 23',
+                    title: 'Lab 6 - Advanced flow control',
+                    description: 'Complex branching and loops',
+                    type: 'lab',
+                    icon: '🧪'
+                },
+                {
+                    date: 'June 26',
+                    title: 'Exam 2',
+                    description: 'Basic Flow Control and Intermediate OOPs',
+                    type: 'exam',
+                    icon: '📊'
+                }
+            ];
+            
+            let eventsHTML = '';
+            
+            upcomingEvents.forEach(event => {
+                eventsHTML += `
+                    <div class="event-item ${event.type}">
+                        <div class="event-icon">${event.icon}</div>
+                        <div class="event-date">${event.date}</div>
+                        <div class="event-details">
+                            <div class="event-title">${event.title}</div>
+                            <div class="event-description">${event.description}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            eventsContent.innerHTML = eventsHTML;
+        }
 
         // Calendar and Schedule Management
         function updateCalendarAndSchedule() {
@@ -1669,6 +1747,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             generateCalendar();
             updateCalendarAndSchedule();
+            updateUpcomingEvents();
         });
 
         // Add entrance animations
@@ -1687,7 +1766,7 @@
         }, observerOptions);
 
         // Observe cards for animation
-        document.querySelectorAll('.card, .course-table').forEach(card => {
+        document.querySelectorAll('.card, .dashboard-item').forEach(card => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(20px)';
             card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
